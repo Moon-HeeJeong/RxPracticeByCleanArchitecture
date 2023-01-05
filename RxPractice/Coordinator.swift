@@ -9,17 +9,20 @@ import Foundation
 import UIKit
 
 
-class Coordinator {
+class Coordinator : NSObject{
+    
+    deinit{
+        print("deinit \(self)")
+    }
     
     var children: [Coordinator] = []
     weak var previousCoordinator: Coordinator?
     weak var vc: BaseViewController?
     
+    unowned let presenter: UIViewController?
+    unowned var navigationController: UINavigationController?
     
-    let presenter: UIViewController?
-    var navigationController: UINavigationController?
-    
-    init(){
+    override init(){
         self.presenter = nil
         self.navigationController = nil
     }
@@ -39,9 +42,8 @@ class Coordinator {
     }
     
     func finish(){
-        
         if let navi = self.navigationController{
-            if navi.children.count > 1{
+            if navi.children.count >= 2{
                 self.navigationController?.popViewController(animated: true)
             }else{
                 self.navigationController?.dismiss(animated: true)

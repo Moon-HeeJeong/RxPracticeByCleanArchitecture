@@ -126,4 +126,6 @@ class BaseViewController: UIViewController{
             self.alert = nil
         })
     }
+    
+    func receiveGift(value: Any?){ }
 }

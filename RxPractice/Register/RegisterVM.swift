@@ -16,11 +16,15 @@ protocol ViewModelType{
     associatedtype Input: InputType
     associatedtype Output: OutputType
     
+    
     func transformToOutput(input: Input, disposeBag: DisposeBag) -> Output
 }
 
 class RegisterVM: ViewModelType{
-   
+    deinit{
+        print("deinit \(self)")
+    }
+    
     struct Input: InputType{
         var nameText: Observable<String>
         var pwText: Observable<String>
@@ -34,6 +38,8 @@ class RegisterVM: ViewModelType{
         var showAlert: Driver<AlertData?>
     }
     
+    private var coordinator: RegisterCoordinator?
+    
     var isLimitedNameCountOvb: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var isLimitedPwCountOvb: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var isSameKeywordOvb: BehaviorRelay<Bool> = BehaviorRelay(value: false)
@@ -42,9 +48,15 @@ class RegisterVM: ViewModelType{
     var pwKeywordOvb: BehaviorRelay<String> = BehaviorRelay(value: "")
     var searchKeywordOvb: BehaviorRelay<String> = BehaviorRelay(value: "")
     var getCountOvb: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
+    
+    
     var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
     
+    var giftObv: BehaviorRelay<String> = BehaviorRelay(value: "")
+    
+    var giftData: String = ""
+   
     lazy var isEnabledRegisterOvb: Observable<Bool> = {
         Observable.combineLatest(self.nameKeywordOvb, self.pwKeywordOvb){name, pw in
             if name.count > 5 || name.count < 2 || pw.count > 5 || pw.count < 2{
@@ -61,7 +73,8 @@ class RegisterVM: ViewModelType{
     }()
     
     let usecase: RegisterUC
-    init(usecase: RegisterUC){
+    init(coordinator: RegisterCoordinator, usecase: RegisterUC){
+        self.coordinator = coordinator
         self.usecase = usecase
     }
     
@@ -86,7 +99,7 @@ class RegisterVM: ViewModelType{
             .bind(to: self.pwKeywordOvb)
             .disposed(by: disposeBag)
         
-        input.btnTap
+        input.btnTap 
             .bind {
                 self.isActivityOn.accept(true)
                 var count: Int?
@@ -96,6 +109,9 @@ class RegisterVM: ViewModelType{
                     case .next(let data):
                         print("getData next :: \(data.resultCount)")
                         self.getCountOvb.accept(data.resultCount)
+                        print("url::\(data.results?.first?.ipadScreenshotUrls.first ?? "")")
+                        self.giftObv.accept(data.results?.first?.ipadScreenshotUrls.first ?? "")
+                        self.giftData = data.results?.first?.ipadScreenshotUrls.first ?? ""
                         count = data.resultCount
                         break
                     case .error(let err):
@@ -105,22 +121,13 @@ class RegisterVM: ViewModelType{
                         print("getData completed")
                         self.isActivityOn.accept(false)
                         if let count = count{
-//                            self.showAlertOvb.accept(AlertData(title: "어얼러엇", message: "\(count)", btnType: .two(btnTxts: ["1번", "2번"], action2: { _ in
-//                                print("2번")
-//                            } )))
-//                            self.showAlertOvb.accept(AlertData(title: "어얼러엇", message: "\(count)", btnType: .three(btnTxts: ["1","2","3"],action2: { _ in
-//                                print("2번")
-//                            }, action3: { _ in
-//                                print("3번")
-//                            })))
-                            
                             self.showAlertOvb.accept(AlertData(title: "검색완료", message: "\(count)개의 검색결과가 있습니다.", btnType: .two(btnTxts: ["결과확인", "취소"], action1: { _ in
                                 print("결과확인")
+                                self.coordinator?.goSearchResult(resultData: self.giftData)
                             }, action2: { _ in
                                 print("취소")
                             })))
                         }
-                        
                         break
                     }
                 }.disposed(by: disposeBag)

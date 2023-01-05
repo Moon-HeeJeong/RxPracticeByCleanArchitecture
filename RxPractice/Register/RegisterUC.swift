@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 
 class RegisterUC{
+    deinit{
+        print("deinit \(self)")
+    }
     
     let repository: RegisterRP
     

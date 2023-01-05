@@ -21,8 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setView(){
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = RegisterVC(viewModel: RegisterVM(usecase: RegisterUC(repository: RegisterRP())), baseView: RegisterV())
-        self.window?.makeKeyAndVisible()
+//        self.window?.rootViewController = RegisterVC(viewModel: RegisterVM(usecase: RegisterUC(repository: RegisterRP())), baseView: RegisterV())
+//        self.window?.makeKeyAndVisible()
+        
+        
+        let appCoordinator = RegisterCoordinator(window: self.window!)
+        appCoordinator.start()
     }
 
 }

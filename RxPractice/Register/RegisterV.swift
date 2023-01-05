@@ -11,6 +11,9 @@ import RxSwift
 import RxCocoa
 
 class RegisterV: UIView{
+    deinit{
+        print("deinit \(self)")
+    }
     
     var nameTextField: UITextField!
     var passwordTextField: UITextField!

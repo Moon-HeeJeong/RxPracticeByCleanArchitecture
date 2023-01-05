@@ -11,9 +11,16 @@ import RxSwift
 import RxCocoa
 
 class RegisterVC: BaseViewController {
+    deinit{
+        print("deinit \(self)")
+    }
     
     private let _viewModel: RegisterVM!
     private let _view: RegisterV!
+    
+    var giftDeliverObv: Observable<String>{
+        return self._viewModel.giftObv.asObservable()
+    }
     
     init(viewModel: RegisterVM, baseView: RegisterV){
         self._viewModel = viewModel
@@ -68,6 +75,11 @@ class RegisterVC: BaseViewController {
             .disposed(by: self.disposeBag)
         
     }
+    
+    override func receiveGift(value: Any?) {
+        print("receive gift :: \(value)")
+    }
+    
     
 //    func setTextField(){
 //

@@ -12,7 +12,16 @@ import MHTools
 import Alamofire
 
 struct TestInfo: Model_P{
-    let resultCount: Int
+    struct ResultList: Model_P{
+        let ipadScreenshotUrls: [String]
+    }
+    
+    var resultCount: Int?
+    var results: [ResultList]?
+}
+
+struct ResultList: Model_P{
+    let ipadScreenshotUrls: [String]
 }
 
 class APIConfig: MH_APIConfig{
@@ -30,7 +39,8 @@ struct APIResponse<DataType: Model_P>: Response_P{
     var responseType: ResponseType
     var data: DataType?
     var resultCount: Int?
-
+    var results: [ResultList]?
+    
     init(responseType: ResponseType, data: DataType?) {
         self.responseType = responseType
         self.data = data
@@ -38,15 +48,18 @@ struct APIResponse<DataType: Model_P>: Response_P{
 
     enum CodingKeys: CodingKey{
         case resultCount
+        case results
     }
 
     public init(from decoder: Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.responseType = .ok(message: "")
+        
         self.data = try? decoder.container(keyedBy: CodingKeys.self) as? DataType
         self.resultCount = try? container.decode(Int.self, forKey: .resultCount)
-
+        self.results = try? container.decode([ResultList].self, forKey: .results)
+        
 //        let status = try container.decode(Int.self, forKey: .status)
 //        let message = try? container.decode(String.self, forKey: .message)
 //
@@ -114,6 +127,9 @@ class APITest: MH_API{
 }
 
 class RegisterRP{
+    deinit{
+        print("deinit \(self)")
+    }
     
     typealias TestResponse = Observable<TestAPI.ResponseType>
     

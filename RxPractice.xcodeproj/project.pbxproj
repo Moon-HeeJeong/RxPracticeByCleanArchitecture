@@ -32,6 +32,16 @@
 		D99F7AA4294AE38700C3CC20 /* RegisterVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99F7AA2294AE38700C3CC20 /* RegisterVM.swift */; };
 		D9B1CE6929518CA700723E8C /* RegisterRP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B1CE6829518CA700723E8C /* RegisterRP.swift */; };
 		D9B1CE6A29518CA700723E8C /* RegisterRP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B1CE6829518CA700723E8C /* RegisterRP.swift */; };
+		D9EC92762963E48800A299F1 /* SearchResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC92752963E48800A299F1 /* SearchResultVM.swift */; };
+		D9EC92772963E48800A299F1 /* SearchResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC92752963E48800A299F1 /* SearchResultVM.swift */; };
+		D9EC92792963E57000A299F1 /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC92782963E57000A299F1 /* SearchResultVC.swift */; };
+		D9EC927A2963E57000A299F1 /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC92782963E57000A299F1 /* SearchResultVC.swift */; };
+		D9EC927C2963E57900A299F1 /* SearchResultV.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC927B2963E57900A299F1 /* SearchResultV.swift */; };
+		D9EC927D2963E57900A299F1 /* SearchResultV.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC927B2963E57900A299F1 /* SearchResultV.swift */; };
+		D9EC927F2963E71300A299F1 /* SearchResultRP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC927E2963E71300A299F1 /* SearchResultRP.swift */; };
+		D9EC92802963E71300A299F1 /* SearchResultRP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC927E2963E71300A299F1 /* SearchResultRP.swift */; };
+		D9EC92822963E71D00A299F1 /* SearchResultUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC92812963E71D00A299F1 /* SearchResultUC.swift */; };
+		D9EC92832963E71D00A299F1 /* SearchResultUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC92812963E71D00A299F1 /* SearchResultUC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +131,11 @@
 		D99F7A9A294AD5E600C3CC20 /* RegisterV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterV.swift; sourceTree = "<group>"; };
 		D99F7AA2294AE38700C3CC20 /* RegisterVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVM.swift; sourceTree = "<group>"; };
 		D9B1CE6829518CA700723E8C /* RegisterRP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRP.swift; sourceTree = "<group>"; };
+		D9EC92752963E48800A299F1 /* SearchResultVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVM.swift; sourceTree = "<group>"; };
+		D9EC92782963E57000A299F1 /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
+		D9EC927B2963E57900A299F1 /* SearchResultV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultV.swift; sourceTree = "<group>"; };
+		D9EC927E2963E71300A299F1 /* SearchResultRP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultRP.swift; sourceTree = "<group>"; };
+		D9EC92812963E71D00A299F1 /* SearchResultUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultUC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,20 +204,15 @@
 		D94BDC4B2947F64700AE2C96 /* RxPractice */ = {
 			isa = PBXGroup;
 			children = (
+				D9EC92742963CE6E00A299F1 /* SearchResult */,
+				D9EC926C2963CE5C00A299F1 /* Register */,
 				D98CABA0294954D500DED725 /* Images */,
 				D94BDC4C2947F64700AE2C96 /* AppDelegate.swift */,
-				D99F7AA2294AE38700C3CC20 /* RegisterVM.swift */,
-				D94BDC502947F64700AE2C96 /* RegisterVC.swift */,
-				D99F7A9A294AD5E600C3CC20 /* RegisterV.swift */,
-				D9B1CE6829518CA700723E8C /* RegisterRP.swift */,
-				D96786722952A5E1002C35FA /* RegisterUC.swift */,
 				D94BDC552947F64900AE2C96 /* Assets.xcassets */,
 				D94BDC572947F64900AE2C96 /* LaunchScreen.storyboard */,
 				D94BDC5A2947F64900AE2C96 /* Info.plist */,
 				D990AAB0295AC9230088B29C /* BaseViewController.swift */,
 				D98EB2E429629C1E00FA1DA6 /* Coordinator.swift */,
-				D98EB2EE2962AC7A00FA1DA6 /* RegisterCoordinator.swift */,
-				D98EB2F12962BC0D00FA1DA6 /* SearchResultCoordinator.swift */,
 			);
 			path = RxPractice;
 			sourceTree = "<group>";
@@ -252,6 +262,32 @@
 				D98CABA62949551800DED725 /* button */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		D9EC926C2963CE5C00A299F1 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				D99F7AA2294AE38700C3CC20 /* RegisterVM.swift */,
+				D94BDC502947F64700AE2C96 /* RegisterVC.swift */,
+				D99F7A9A294AD5E600C3CC20 /* RegisterV.swift */,
+				D9B1CE6829518CA700723E8C /* RegisterRP.swift */,
+				D96786722952A5E1002C35FA /* RegisterUC.swift */,
+				D98EB2EE2962AC7A00FA1DA6 /* RegisterCoordinator.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		D9EC92742963CE6E00A299F1 /* SearchResult */ = {
+			isa = PBXGroup;
+			children = (
+				D98EB2F12962BC0D00FA1DA6 /* SearchResultCoordinator.swift */,
+				D9EC92752963E48800A299F1 /* SearchResultVM.swift */,
+				D9EC92782963E57000A299F1 /* SearchResultVC.swift */,
+				D9EC927B2963E57900A299F1 /* SearchResultV.swift */,
+				D9EC927E2963E71300A299F1 /* SearchResultRP.swift */,
+				D9EC92812963E71D00A299F1 /* SearchResultUC.swift */,
+			);
+			path = SearchResult;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -491,12 +527,17 @@
 				D9B1CE6929518CA700723E8C /* RegisterRP.swift in Sources */,
 				D98EB2EF2962AC7A00FA1DA6 /* RegisterCoordinator.swift in Sources */,
 				D98EB2F22962BC0D00FA1DA6 /* SearchResultCoordinator.swift in Sources */,
+				D9EC927C2963E57900A299F1 /* SearchResultV.swift in Sources */,
 				D94BDC512947F64700AE2C96 /* RegisterVC.swift in Sources */,
+				D9EC927F2963E71300A299F1 /* SearchResultRP.swift in Sources */,
+				D9EC92762963E48800A299F1 /* SearchResultVM.swift in Sources */,
 				D99F7A9B294AD5E600C3CC20 /* RegisterV.swift in Sources */,
 				D94BDC4D2947F64700AE2C96 /* AppDelegate.swift in Sources */,
 				D96786732952A5E1002C35FA /* RegisterUC.swift in Sources */,
+				D9EC92792963E57000A299F1 /* SearchResultVC.swift in Sources */,
 				D990AAB1295AC9230088B29C /* BaseViewController.swift in Sources */,
 				D99F7AA3294AE38700C3CC20 /* RegisterVM.swift in Sources */,
+				D9EC92822963E71D00A299F1 /* SearchResultUC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,12 +549,17 @@
 				D9B1CE6A29518CA700723E8C /* RegisterRP.swift in Sources */,
 				D98EB2F02962AC7A00FA1DA6 /* RegisterCoordinator.swift in Sources */,
 				D98EB2F32962BC0D00FA1DA6 /* SearchResultCoordinator.swift in Sources */,
+				D9EC927D2963E57900A299F1 /* SearchResultV.swift in Sources */,
 				D94BDC832947FADE00AE2C96 /* RxPracticeTests.swift in Sources */,
+				D9EC92802963E71300A299F1 /* SearchResultRP.swift in Sources */,
+				D9EC92772963E48800A299F1 /* SearchResultVM.swift in Sources */,
 				D99F7A9C294AD5E600C3CC20 /* RegisterV.swift in Sources */,
 				D99F7A97294ABF5000C3CC20 /* RegisterVC.swift in Sources */,
 				D96786742952A5E1002C35FA /* RegisterUC.swift in Sources */,
+				D9EC927A2963E57000A299F1 /* SearchResultVC.swift in Sources */,
 				D990AAB2295AC9230088B29C /* BaseViewController.swift in Sources */,
 				D99F7AA4294AE38700C3CC20 /* RegisterVM.swift in Sources */,
+				D9EC92832963E71D00A299F1 /* SearchResultUC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
