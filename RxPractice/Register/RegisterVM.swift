@@ -13,6 +13,8 @@ protocol InputType{}
 protocol OutputType{}
 
 protocol ViewModelType{
+    associatedtype UseCase: UseCaseType
+    associatedtype Coordinator: CoordinatorType
     associatedtype Input: InputType
     associatedtype Output: OutputType
     
@@ -24,36 +26,31 @@ protocol ViewModelType{
     
     func transformToOutput(input: Input, disposeBag: DisposeBag) -> Output
 
-//    var coordinator: Coordinator?{get set}
-//    var usecase: UseCaseType{get set}
+    var coordinator: Coordinator?{get set}
+    var usecase: UseCase{get set}
     
 }
 
 extension ViewModelType{
     
-    func setUpGift(coordinator: Coordinator){
-        
-        print("\(coordinator) setup gift")
-        
-        let dBag = DisposeBag()
-        
+    func setUpGift(disposeBag: DisposeBag){
         
         self.receiveGiftOvb
             .subscribe {
                 print("received gift🎁 \($0)")
-            }.disposed(by: dBag)
+            }.disposed(by: disposeBag)
         
         self.giftDeliverObv
             .subscribe { value in
                 print("deliverGift🎁 \(value)")
-                coordinator.deliverGift(value: value)
-//                self.coordinator?.deliverGift(value: $0)
-            }.disposed(by: dBag)
+                self.coordinator?.deliverGift(value: value)
+//                self.coordinator.self?.deliverGift(value: value)
+            }.disposed(by: disposeBag)
     }
 }
 
 class RegisterVM: ViewModelType{
-   
+    
     deinit{
         print("deinit \(self)")
     }
@@ -71,7 +68,6 @@ class RegisterVM: ViewModelType{
         var showAlert: Driver<AlertData?>
     }
     
-    private var coordinator: RegisterCoordinator? //weak
     
     var isLimitedNameCountOvb: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var isLimitedPwCountOvb: BehaviorRelay<Bool> = BehaviorRelay(value: false)
@@ -87,10 +83,6 @@ class RegisterVM: ViewModelType{
     var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
     var receiveGiftOvb: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
     var giftDeliverObv = PublishSubject<Any?>()
-//    var giftObv: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
-//    var giftDeliverObv: Observable<Any?>{
-//        return self.giftObv.asObservable()
-//    }
     
     var imgUrlStr: String = ""
    
@@ -109,14 +101,16 @@ class RegisterVM: ViewModelType{
         
     }()
     
-    let usecase: RegisterUC
+    var coordinator: RegisterCoordinator? //weak
+    var usecase: RegisterUC
     
     let dBag = DisposeBag()
+    
     init(coordinator: RegisterCoordinator, usecase: RegisterUC){
         self.coordinator = coordinator
         self.usecase = usecase
         
-        self.setUpGift(coordinator: coordinator)
+        self.setUpGift(disposeBag: dBag)
         
 //        self.receiveGiftOvb.subscribe { //[weak self] value in
 //            print("RegisterVM init 에서 설정한 구독 \($0)")
@@ -133,12 +127,12 @@ class RegisterVM: ViewModelType{
             .bind(to: self.pwKeywordOvb)
             .disposed(by: disposeBag)
         
-        input.btnTap 
+        input.btnTap
             .bind {
                 self.isActivityOn.accept(true)
                 var count: Int?
                 self.usecase.getData(keyword: self.nameKeywordOvb.value).subscribe { event in
-                    
+
                     switch event{
                     case .next(let data):
                         print("getData next :: \(data.resultCount)")
@@ -169,6 +163,4 @@ class RegisterVM: ViewModelType{
         
         return Output(isEnabledRegisterBtn: self.isEnabledRegisterOvb.asDriver(onErrorJustReturn: false), searchedCount: self.getCountOvb.asDriver(onErrorJustReturn: -1), isActiveAnimation: self.isActivityOn.asDriver(), showAlert: self.showAlertOvb.asDriver())
     }
-    
-    
 }

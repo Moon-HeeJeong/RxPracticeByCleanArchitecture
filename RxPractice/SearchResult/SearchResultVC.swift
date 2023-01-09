@@ -52,6 +52,14 @@ class SearchResultVC: BaseViewController{
         
     }
     
+    func initValues(resultData: String?){
+        if let url = URL(string: resultData ?? ""){
+            let data = (try? Data(contentsOf: url))!
+            let img = UIImage(data: data)
+            self._viewModel.getImgObv.accept(img)
+        }
+    }
+    
     override func receiveGift(value: Any?) {
         self._viewModel.receiveGiftOvb.accept(value)
     }

@@ -70,6 +70,8 @@ class RegisterVC: BaseViewController {
             }
             .disposed(by: self.disposeBag)
         
+        
+        
     }
     
     override func receiveGift(value: Any?) {

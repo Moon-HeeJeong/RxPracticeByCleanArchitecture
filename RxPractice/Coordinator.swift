@@ -8,8 +8,15 @@
 import Foundation
 import UIKit
 
+protocol CoordinatorType{
+    
+}
+extension CoordinatorType{
+    func deliverGift(value: Any?){}
+}
 
-class Coordinator : NSObject{
+
+class Coordinator : NSObject, CoordinatorType{
     
     deinit{
         print("deinit \(self)")

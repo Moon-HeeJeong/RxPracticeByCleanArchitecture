@@ -15,7 +15,6 @@ class SearchResultVM: ViewModelType{
         print("deinit \(self)")
     }
     
-    
     struct Input: InputType{
         var nextBtnTap: Observable<Void>
         var closeBtnTap: Observable<Void>
@@ -25,7 +24,7 @@ class SearchResultVM: ViewModelType{
         var img: Driver<UIImage?>
     }
     
-    private weak var coordinator: SearchResultCoordinator?
+//    private weak var coordinator: SearchResultCoordinator?
     
     var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
@@ -36,33 +35,32 @@ class SearchResultVM: ViewModelType{
     
     let disposeBag = DisposeBag()
     
-    lazy var getImgObv:Observable<UIImage?> = {
-        Observable.just(self.resultData ?? "")
-//            .flatMap({ str -> Observable<UIImage?> in
-//                if let url = URL(string: str){
-//                    let data = try? Data(contentsOf: url)
-//                    return UIImage(data: data)
-//                }
-//            })
-            .map({URL(string: $0)!})
-            .map({(try? Data(contentsOf: $0))!})
-            .map({UIImage(data: $0)!})
-//            .filter({$0 != nil})
-    }()
+    var getImgObv: BehaviorRelay<UIImage?> = BehaviorRelay(value: nil)
     
-    let usecase: SearchResultUC
+//    lazy var getImgObv:Observable<UIImage?> = { //얘로 바로 받기
+//        Observable.just(self.resultData ?? "")
+////            .flatMap({ str -> Observable<UIImage?> in
+////                if let url = URL(string: str){
+////                    let data = try? Data(contentsOf: url)
+////                    return UIImage(data: data)
+////                }
+////            })
+//            .map({URL(string: $0)!})
+//            .map({(try? Data(contentsOf: $0))!})
+//            .map({UIImage(data: $0)!})
+////            .filter({$0 != nil})
+//    }()
     
-    var resultData: String?
     
-    init(coordinator: SearchResultCoordinator, usecase: SearchResultUC, resultData: String?){
+    weak var coordinator: SearchResultCoordinator?
+    var usecase: SearchResultUC
+    
+    let dBag = DisposeBag()
+    init(coordinator: SearchResultCoordinator, usecase: SearchResultUC){
         self.coordinator = coordinator
         self.usecase = usecase
-        self.resultData = resultData
         
-        print("search result receive \(resultData)")
-        
-        self.setUpGift(coordinator: coordinator)
-//        self.setUpGift()
+        self.setUpGift(disposeBag: dBag)
     }
     
     func transformToOutput(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
@@ -70,13 +68,11 @@ class SearchResultVM: ViewModelType{
             .bind {
 //                self.giftObv.accept("== SearchResultVM -> AddedPageVM 이동 중 ==")
                 print("SearchResult VM --> Registe VM deliver gift")
-                self.giftDeliverObv.onNext("==>>>>>")
-//                self.giftDeliverObv.onNext("== SearchResultVM -> AddedPageVM 이동 중 ==")
-                self.coordinator?.goAddedPage()
+                self.giftDeliverObv.onNext("== SearchResultVM -> AddedPageVM 이동 중 ==")
+                (self.coordinator as? SearchResultCoordinator)?.goAddedPage()
             }.disposed(by: disposeBag)
         input.closeBtnTap
             .bind {
-//                self.giftObv.accept("== SearchResultVM 화면 종료 중 ==")
                 print("SearchResult VM --> Registe VM deliver gift")
                 self.giftDeliverObv.onNext("== SearchResultVM 화면 종료 중 ==")
                 self.coordinator?.finish()

@@ -20,8 +20,7 @@ class SearchResultCoordinator: Coordinator{
     }
     
     override func start() {
-        let vc = SearchResultVC(viewModel: SearchResultVM(coordinator: self, usecase: SearchResultUC(repository: SearchResultRP()), resultData: self.resultData), baseView: SearchResultV())
-        
+        let vc = SearchResultVC(viewModel: SearchResultVM(coordinator: self, usecase: SearchResultUC(repository: SearchResultRP())), baseView: SearchResultV())
         
         let naviVC = UINavigationController(rootViewController: vc)
         naviVC.modalPresentationStyle = .fullScreen
@@ -30,9 +29,8 @@ class SearchResultCoordinator: Coordinator{
         self.navigationController = naviVC
         
         self.vc = vc
+        vc.initValues(resultData: self.resultData)
     }
-    
-    
 }
 protocol SearchResultSceneDirector: AnyObject{
     func goSearchResult(resultData: String)
