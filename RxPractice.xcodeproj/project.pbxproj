@@ -16,6 +16,18 @@
 		D94BDC832947FADE00AE2C96 /* RxPracticeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94BDC822947FADE00AE2C96 /* RxPracticeTests.swift */; };
 		D96786732952A5E1002C35FA /* RegisterUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96786722952A5E1002C35FA /* RegisterUC.swift */; };
 		D96786742952A5E1002C35FA /* RegisterUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96786722952A5E1002C35FA /* RegisterUC.swift */; };
+		D985012F296691BE0011FE1E /* AddedPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985012E296691BE0011FE1E /* AddedPageVM.swift */; };
+		D9850130296691BE0011FE1E /* AddedPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985012E296691BE0011FE1E /* AddedPageVM.swift */; };
+		D9850132296691CA0011FE1E /* AddedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9850131296691CA0011FE1E /* AddedPageVC.swift */; };
+		D9850133296691CA0011FE1E /* AddedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9850131296691CA0011FE1E /* AddedPageVC.swift */; };
+		D9850135296691D20011FE1E /* AddedPageV.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9850134296691D20011FE1E /* AddedPageV.swift */; };
+		D9850136296691D20011FE1E /* AddedPageV.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9850134296691D20011FE1E /* AddedPageV.swift */; };
+		D9850138296691D80011FE1E /* AddedPageRP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9850137296691D80011FE1E /* AddedPageRP.swift */; };
+		D9850139296691D80011FE1E /* AddedPageRP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9850137296691D80011FE1E /* AddedPageRP.swift */; };
+		D985013B296691E30011FE1E /* AddedPageUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985013A296691E30011FE1E /* AddedPageUC.swift */; };
+		D985013C296691E30011FE1E /* AddedPageUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985013A296691E30011FE1E /* AddedPageUC.swift */; };
+		D985013E296691EE0011FE1E /* AddedPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985013D296691EE0011FE1E /* AddedPageCoordinator.swift */; };
+		D985013F296691EE0011FE1E /* AddedPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985013D296691EE0011FE1E /* AddedPageCoordinator.swift */; };
 		D98CABA72949551800DED725 /* button in Resources */ = {isa = PBXBuildFile; fileRef = D98CABA62949551800DED725 /* button */; };
 		D98EB2E529629C1E00FA1DA6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98EB2E429629C1E00FA1DA6 /* Coordinator.swift */; };
 		D98EB2E629629C1E00FA1DA6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98EB2E429629C1E00FA1DA6 /* Coordinator.swift */; };
@@ -123,6 +135,12 @@
 		D94BDC822947FADE00AE2C96 /* RxPracticeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPracticeTests.swift; sourceTree = "<group>"; };
 		D94BDCA0294801F400AE2C96 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		D96786722952A5E1002C35FA /* RegisterUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUC.swift; sourceTree = "<group>"; };
+		D985012E296691BE0011FE1E /* AddedPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPageVM.swift; sourceTree = "<group>"; };
+		D9850131296691CA0011FE1E /* AddedPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPageVC.swift; sourceTree = "<group>"; };
+		D9850134296691D20011FE1E /* AddedPageV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPageV.swift; sourceTree = "<group>"; };
+		D9850137296691D80011FE1E /* AddedPageRP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPageRP.swift; sourceTree = "<group>"; };
+		D985013A296691E30011FE1E /* AddedPageUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPageUC.swift; sourceTree = "<group>"; };
+		D985013D296691EE0011FE1E /* AddedPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPageCoordinator.swift; sourceTree = "<group>"; };
 		D98CABA62949551800DED725 /* button */ = {isa = PBXFileReference; lastKnownFileType = folder; path = button; sourceTree = "<group>"; };
 		D98EB2E429629C1E00FA1DA6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D98EB2EE2962AC7A00FA1DA6 /* RegisterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCoordinator.swift; sourceTree = "<group>"; };
@@ -204,6 +222,7 @@
 		D94BDC4B2947F64700AE2C96 /* RxPractice */ = {
 			isa = PBXGroup;
 			children = (
+				D9850126296691970011FE1E /* AddedPage */,
 				D9EC92742963CE6E00A299F1 /* SearchResult */,
 				D9EC926C2963CE5C00A299F1 /* Register */,
 				D98CABA0294954D500DED725 /* Images */,
@@ -254,6 +273,19 @@
 				D94BDCB1294801F400AE2C96 /* RxSwift */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D9850126296691970011FE1E /* AddedPage */ = {
+			isa = PBXGroup;
+			children = (
+				D985012E296691BE0011FE1E /* AddedPageVM.swift */,
+				D9850131296691CA0011FE1E /* AddedPageVC.swift */,
+				D9850134296691D20011FE1E /* AddedPageV.swift */,
+				D9850137296691D80011FE1E /* AddedPageRP.swift */,
+				D985013A296691E30011FE1E /* AddedPageUC.swift */,
+				D985013D296691EE0011FE1E /* AddedPageCoordinator.swift */,
+			);
+			path = AddedPage;
 			sourceTree = "<group>";
 		};
 		D98CABA0294954D500DED725 /* Images */ = {
@@ -527,16 +559,22 @@
 				D9B1CE6929518CA700723E8C /* RegisterRP.swift in Sources */,
 				D98EB2EF2962AC7A00FA1DA6 /* RegisterCoordinator.swift in Sources */,
 				D98EB2F22962BC0D00FA1DA6 /* SearchResultCoordinator.swift in Sources */,
+				D985013E296691EE0011FE1E /* AddedPageCoordinator.swift in Sources */,
 				D9EC927C2963E57900A299F1 /* SearchResultV.swift in Sources */,
 				D94BDC512947F64700AE2C96 /* RegisterVC.swift in Sources */,
+				D9850135296691D20011FE1E /* AddedPageV.swift in Sources */,
 				D9EC927F2963E71300A299F1 /* SearchResultRP.swift in Sources */,
 				D9EC92762963E48800A299F1 /* SearchResultVM.swift in Sources */,
 				D99F7A9B294AD5E600C3CC20 /* RegisterV.swift in Sources */,
+				D9850132296691CA0011FE1E /* AddedPageVC.swift in Sources */,
 				D94BDC4D2947F64700AE2C96 /* AppDelegate.swift in Sources */,
+				D9850138296691D80011FE1E /* AddedPageRP.swift in Sources */,
 				D96786732952A5E1002C35FA /* RegisterUC.swift in Sources */,
 				D9EC92792963E57000A299F1 /* SearchResultVC.swift in Sources */,
+				D985013B296691E30011FE1E /* AddedPageUC.swift in Sources */,
 				D990AAB1295AC9230088B29C /* BaseViewController.swift in Sources */,
 				D99F7AA3294AE38700C3CC20 /* RegisterVM.swift in Sources */,
+				D985012F296691BE0011FE1E /* AddedPageVM.swift in Sources */,
 				D9EC92822963E71D00A299F1 /* SearchResultUC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,16 +587,22 @@
 				D9B1CE6A29518CA700723E8C /* RegisterRP.swift in Sources */,
 				D98EB2F02962AC7A00FA1DA6 /* RegisterCoordinator.swift in Sources */,
 				D98EB2F32962BC0D00FA1DA6 /* SearchResultCoordinator.swift in Sources */,
+				D985013F296691EE0011FE1E /* AddedPageCoordinator.swift in Sources */,
 				D9EC927D2963E57900A299F1 /* SearchResultV.swift in Sources */,
 				D94BDC832947FADE00AE2C96 /* RxPracticeTests.swift in Sources */,
+				D9850136296691D20011FE1E /* AddedPageV.swift in Sources */,
 				D9EC92802963E71300A299F1 /* SearchResultRP.swift in Sources */,
 				D9EC92772963E48800A299F1 /* SearchResultVM.swift in Sources */,
 				D99F7A9C294AD5E600C3CC20 /* RegisterV.swift in Sources */,
+				D9850133296691CA0011FE1E /* AddedPageVC.swift in Sources */,
 				D99F7A97294ABF5000C3CC20 /* RegisterVC.swift in Sources */,
+				D9850139296691D80011FE1E /* AddedPageRP.swift in Sources */,
 				D96786742952A5E1002C35FA /* RegisterUC.swift in Sources */,
 				D9EC927A2963E57000A299F1 /* SearchResultVC.swift in Sources */,
+				D985013C296691E30011FE1E /* AddedPageUC.swift in Sources */,
 				D990AAB2295AC9230088B29C /* BaseViewController.swift in Sources */,
 				D99F7AA4294AE38700C3CC20 /* RegisterVM.swift in Sources */,
+				D9850130296691BE0011FE1E /* AddedPageVM.swift in Sources */,
 				D9EC92832963E71D00A299F1 /* SearchResultUC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

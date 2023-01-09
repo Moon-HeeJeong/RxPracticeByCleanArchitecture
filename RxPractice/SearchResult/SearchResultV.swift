@@ -17,6 +17,7 @@ class SearchResultV: UIView{
     
     var img: UIImageView!
     var closeBtn: UIButton!
+    var nextBtn: UIButton!
     
     init(){
         super.init(frame: .zero)
@@ -40,6 +41,9 @@ class SearchResultV: UIView{
         }()
         self.addSubview(self.img)
         
+        self.nextBtn = UIButton(frame: self.img.frame)
+        self.addSubview(self.nextBtn)
+        
         let imgEndPosY = self.img.frame.origin.y + self.img.frame.size.height
         
         self.closeBtn = {
@@ -57,8 +61,12 @@ class SearchResultV: UIView{
 
 extension Reactive where Base: SearchResultV{
     
-    var imgUrlStr: Binder<UIImage?>{
+    var image: Binder<UIImage?>{
         self.base.img.rx.image
+    }
+    
+    var nextBtnTap: Observable<Void>{
+        self.base.nextBtn.rx.tap.asObservable()
     }
     
     var closeBtnTap: Observable<Void>{

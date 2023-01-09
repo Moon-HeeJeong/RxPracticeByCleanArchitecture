@@ -1,8 +1,8 @@
 //
-//  SearchResultRP.swift
+//  AddedPageRP.swift
 //  RxPractice
 //
-//  Created by LittleFoxiOSDeveloper on 2023/01/03.
+//  Created by LittleFoxiOSDeveloper on 2023/01/05.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ import MHTools
 import Alamofire
 
 
-class SearchResultRP: RepositoryType{
+class AddedPageRP: RepositoryType{
     deinit{
         print("deinit \(self)")
     }

@@ -18,10 +18,6 @@ class RegisterVC: BaseViewController {
     private let _viewModel: RegisterVM!
     private let _view: RegisterV!
     
-    var giftDeliverObv: Observable<String>{
-        return self._viewModel.giftObv.asObservable()
-    }
-    
     init(viewModel: RegisterVM, baseView: RegisterV){
         self._viewModel = viewModel
         self._view = baseView
@@ -41,12 +37,12 @@ class RegisterVC: BaseViewController {
         self.bind()
     }
     
-    func setUp(){
+    override func setUp(){
         self.view.addSubview(self._view)
         self._view.drawView(frame: self.view.frame)
     }
     
-    func bind(){
+    override func bind(){
         
         let txtCountCheckOutput = self._viewModel.transformToOutput(input: RegisterVM.Input(nameText: self._view.rx.nameText, pwText: self._view.rx.pwText, btnTap: self._view.rx.registerBtnTap), disposeBag: self.disposeBag)
         
@@ -77,7 +73,7 @@ class RegisterVC: BaseViewController {
     }
     
     override func receiveGift(value: Any?) {
-        print("receive gift :: \(value)")
+        self._viewModel.receiveGiftOvb.accept(value)
     }
     
     

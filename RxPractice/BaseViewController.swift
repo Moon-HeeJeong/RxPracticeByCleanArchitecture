@@ -92,32 +92,32 @@ class BaseViewController: UIViewController{
         } else {
         }
         
-        self.isSpinnerOn.bind { isOn in
+        self.isSpinnerOn.bind { [weak self] isOn in
             print("spinner \(isOn)")
             if isOn{
-                self.spinner?.startAnimating()
+                self?.spinner?.startAnimating()
             }else{
-                self.spinner?.stopAnimating()
+                self?.spinner?.stopAnimating()
             }
         }.disposed(by: self.disposeBag)
     }
     
     func setAlert(){
-        self.alertOvb.bind { alertData in
+        self.alertOvb.bind { [weak self] alertData in
             guard let alertData = alertData else{
                 return
             }
-            self.alert = UIAlertController(title: alertData.title, message: alertData.message, preferredStyle: .alert)
+            self?.alert = UIAlertController(title: alertData.title, message: alertData.message, preferredStyle: .alert)
             
             for i in 0..<alertData.btnType.btnTxts.count{
                 let data = alertData.btnType
                 let action = UIAlertAction(title: data.btnTxts[i], style: .default, handler: data.actions?[i] ?? {[weak self] action in
                     self?.hideAlert()
                 })
-                self.alert?.addAction(action)
+                self?.alert?.addAction(action)
             }
             
-            self.present(self.alert!, animated: false)
+            self?.present((self?.alert)!, animated: false)
         }.disposed(by: self.disposeBag)
     }
     
@@ -127,5 +127,7 @@ class BaseViewController: UIViewController{
         })
     }
     
+    func setUp(){}
+    func bind(){}
     func receiveGift(value: Any?){ }
 }

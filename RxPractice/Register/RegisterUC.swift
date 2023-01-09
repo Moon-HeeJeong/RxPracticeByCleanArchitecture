@@ -9,14 +9,22 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class RegisterUC{
+protocol UseCaseType{
+    associatedtype T: RepositoryType
+    
+    var repository: T { get set }
+    
+    init(repository: T)
+}
+
+class RegisterUC: UseCaseType{
     deinit{
         print("deinit \(self)")
     }
     
-    let repository: RegisterRP
+    var repository: RegisterRP
     
-    init(repository: RegisterRP){
+    required init(repository: RegisterRP){
         self.repository = repository
     }
     

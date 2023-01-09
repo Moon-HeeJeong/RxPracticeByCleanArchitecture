@@ -67,4 +67,7 @@ class Coordinator : NSObject{
         }
     }
     
+    func deliverGift(value: Any?){
+        self.previousCoordinator?.vc?.receiveGift(value: value)
+    }
 }

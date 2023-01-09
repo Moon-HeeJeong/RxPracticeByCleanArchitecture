@@ -1,24 +1,25 @@
 //
-//  SearchResultVC.swift
+//  AddedPageVC.swift
 //  RxPractice
 //
-//  Created by LittleFoxiOSDeveloper on 2023/01/03.
+//  Created by LittleFoxiOSDeveloper on 2023/01/05.
 //
 
 import Foundation
 import RxSwift
 import RxCocoa
 
-class SearchResultVC: BaseViewController{
+class AddedPageVC: BaseViewController{
+    
     deinit{
         print("deinit \(self)")
     }
     
-    private let _viewModel: SearchResultVM!
-    private let _view: SearchResultV!
+    private let _viewModel: AddedPageVM!
+    private let _view: AddedPageV!
     
     
-    init(viewModel: SearchResultVM, baseView: SearchResultV){
+    init(viewModel: AddedPageVM, baseView: AddedPageV){
         self._viewModel = viewModel
         self._view = baseView
         super.init()
@@ -43,14 +44,10 @@ class SearchResultVC: BaseViewController{
     }
     
     override func bind(){
-        let output = self._viewModel.transformToOutput(input: SearchResultVM.Input( nextBtnTap: self._view.rx.nextBtnTap, closeBtnTap: self._view.rx.closeBtnTap), disposeBag: self.disposeBag)
-        
-        
-        output.img
-            .drive(self._view.rx.image)
-            .disposed(by: self.disposeBag)
-        
+        let output = self._viewModel.transformToOutput(input: AddedPageVM.Input(closeBtnTap: self._view.rx.closeBtnTap), disposeBag: self.disposeBag)
     }
+    
+    
     
     override func receiveGift(value: Any?) {
         self._viewModel.receiveGiftOvb.accept(value)

@@ -10,73 +10,79 @@ import RxSwift
 import RxCocoa
 
 class SearchResultVM: ViewModelType{
+    
     deinit{
         print("deinit \(self)")
     }
     
     
     struct Input: InputType{
+        var nextBtnTap: Observable<Void>
         var closeBtnTap: Observable<Void>
     }
     
     struct Output: OutputType{
-//        var imgUrlStr: Driver<UIImage>
+        var img: Driver<UIImage?>
     }
     
-    private var coordinator: SearchResultCoordinator?
+    private weak var coordinator: SearchResultCoordinator?
     
-    let giftObv: BehaviorRelay<String> = BehaviorRelay(value: "")
-    var giftDeliverObv: Observable<String>{
-        return self.giftObv.asObservable()
-    }
+    var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
+    var receiveGiftOvb: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
+    var giftDeliverObv = PublishSubject<Any?>()
     
     var getImgUrlStrObv: BehaviorRelay<String> = BehaviorRelay(value: "")
-//    lazy var getImageObv: Observable<UIImage?> = {
-//
-//        return Observable.create(<#T##subscribe: (AnyObserver<_>) -> Disposable##(AnyObserver<_>) -> Disposable#>)
-//
-//
-//
-//            let url = URL(string: self.getImgUrlStrObv.value)!
-//            let data = (try? Data(contentsOf: url))!
-//        return UIImage(data: data)!
-//    }()
-//    var giftDeliverObv: Observable<String>{
-//        return self.giftObv.asObservable()
-//    }
+    
+    let disposeBag = DisposeBag()
+    
+    lazy var getImgObv:Observable<UIImage?> = {
+        Observable.just(self.resultData ?? "")
+//            .flatMap({ str -> Observable<UIImage?> in
+//                if let url = URL(string: str){
+//                    let data = try? Data(contentsOf: url)
+//                    return UIImage(data: data)
+//                }
+//            })
+            .map({URL(string: $0)!})
+            .map({(try? Data(contentsOf: $0))!})
+            .map({UIImage(data: $0)!})
+//            .filter({$0 != nil})
+    }()
     
     let usecase: SearchResultUC
+    
+    var resultData: String?
+    
     init(coordinator: SearchResultCoordinator, usecase: SearchResultUC, resultData: String?){
         self.coordinator = coordinator
         self.usecase = usecase
+        self.resultData = resultData
         
         print("search result receive \(resultData)")
+        
+        self.setUpGift(coordinator: coordinator)
+//        self.setUpGift()
     }
     
     func transformToOutput(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
+        input.nextBtnTap
+            .bind {
+//                self.giftObv.accept("== SearchResultVM -> AddedPageVM 이동 중 ==")
+                print("SearchResult VM --> Registe VM deliver gift")
+                self.giftDeliverObv.onNext("==>>>>>")
+//                self.giftDeliverObv.onNext("== SearchResultVM -> AddedPageVM 이동 중 ==")
+                self.coordinator?.goAddedPage()
+            }.disposed(by: disposeBag)
         input.closeBtnTap
             .bind {
+//                self.giftObv.accept("== SearchResultVM 화면 종료 중 ==")
+                print("SearchResult VM --> Registe VM deliver gift")
+                self.giftDeliverObv.onNext("== SearchResultVM 화면 종료 중 ==")
                 self.coordinator?.finish()
             }.disposed(by: disposeBag)
         
-        return Output()
-//        return Output(imgUrlStr: self.getImageObv.asDriver(onErrorJustReturn: nil))
+        return Output(img: self.getImgObv.asDriver(onErrorJustReturn: nil))
     }
     
-    func close(value: String){
-        self.giftObv.accept(value)
-    }
-    
-    
-    
-    func setupGift(){
-        self.giftDeliverObv.subscribe { [weak self] str in
-            self?.coordinator?.previousCoordinator?.vc?.receiveGift(value: str)
-        }onCompleted: {
-        }onDisposed: {
-            Disposables.create {
-                
-            }
-        }
-    }
 }

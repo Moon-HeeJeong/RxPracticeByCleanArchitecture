@@ -126,7 +126,11 @@ class APITest: MH_API{
    // }()
 }
 
-class RegisterRP{
+
+protocol RepositoryType{
+    
+}
+class RegisterRP: RepositoryType{
     deinit{
         print("deinit \(self)")
     }

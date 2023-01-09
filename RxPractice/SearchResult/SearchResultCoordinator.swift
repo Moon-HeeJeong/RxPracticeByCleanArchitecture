@@ -37,3 +37,11 @@ class SearchResultCoordinator: Coordinator{
 protocol SearchResultSceneDirector: AnyObject{
     func goSearchResult(resultData: String)
 }
+extension SearchResultCoordinator: AddedPageSceneDirector{
+    func goAddedPage() {
+        let coordi = AddedPageCoordinator(navigationController: self.navigationController!)
+        coordi.previousCoordinator = self
+        coordi.start()
+        self.children.append(coordi)
+    }
+}

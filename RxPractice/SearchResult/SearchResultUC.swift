@@ -9,14 +9,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SearchResultUC{
+class SearchResultUC: UseCaseType{
     deinit{
         print("deinit \(self)")
     }
     
-    let repository: SearchResultRP
+    var repository: SearchResultRP
     
-    init(repository: SearchResultRP){
+    required init(repository: SearchResultRP){
         self.repository = repository
     }
     
