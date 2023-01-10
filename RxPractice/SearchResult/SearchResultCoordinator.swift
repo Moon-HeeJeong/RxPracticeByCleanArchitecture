@@ -24,10 +24,8 @@ class SearchResultCoordinator: Coordinator{
         
         let naviVC = UINavigationController(rootViewController: vc)
         naviVC.modalPresentationStyle = .fullScreen
-//        self.navigationController?.pushViewController(vc, animated: true)
         self.presenter?.present(naviVC, animated: true)
         self.navigationController = naviVC
-        
         self.vc = vc
         vc.initValues(resultData: self.resultData)
     }

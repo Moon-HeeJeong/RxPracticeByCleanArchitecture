@@ -22,13 +22,14 @@ class AddedPageVM: ViewModelType{
     struct Output: OutputType{
     }
     
+    var coordinator: AddedPageCoordinator?
+    var usecase: AddedPageUC
+    
     var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
     var receiveGiftOvb: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
     var giftDeliverObv: PublishSubject<Any?> = PublishSubject()
     
-    weak var coordinator: AddedPageCoordinator?
-    var usecase: AddedPageUC
     let disposeBag = DisposeBag()
     
     init(coordinator: AddedPageCoordinator, usecase: AddedPageUC){
@@ -45,7 +46,7 @@ class AddedPageVM: ViewModelType{
                 print("AddPage VM --> SearchResult VM deliver gift")
                 self.giftDeliverObv.onNext("AddPage 종료")
                 self.coordinator?.finish()
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
         return Output()
     }
@@ -54,12 +55,12 @@ class AddedPageVM: ViewModelType{
         
         self.receiveGiftOvb
             .subscribe {[weak self] value in
-                print("received gift🎁 \(value)")
+                print("AddedPage received gift🎁 \(value)")
             }.disposed(by: self.disposeBag)
 
         self.giftDeliverObv
             .subscribe {[weak self] value in
-                print("deliverGift🎁 \(value)")
+                print("AddedPage deliverGift🎁 \(value)")
                 self?.coordinator?.deliverGift(value: value)
             }.disposed(by: self.disposeBag)
     }

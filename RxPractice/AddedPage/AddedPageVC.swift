@@ -40,14 +40,11 @@ class AddedPageVC: BaseViewController{
     override func setUp(){
         self.view.addSubview(self._view)
         self._view.drawView(frame: self.view.frame)
-        
     }
     
     override func bind(){
         let output = self._viewModel.transformToOutput(input: AddedPageVM.Input(closeBtnTap: self._view.rx.closeBtnTap))
     }
-    
-    
     
     override func receiveGift(value: Any?) {
         self._viewModel.receiveGiftOvb.accept(value)

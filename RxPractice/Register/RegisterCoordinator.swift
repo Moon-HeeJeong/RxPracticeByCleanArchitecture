@@ -13,7 +13,6 @@ class RegisterCoordinator: Coordinator{
 //    weak var vc: RegisterVC?
     
     private var window: UIWindow
-    private var mainVC: RegisterVC?
     
     init(window: UIWindow){
         self.window = window
@@ -21,8 +20,8 @@ class RegisterCoordinator: Coordinator{
     }
     
     override func start() {
-        self.mainVC = RegisterVC(viewModel: RegisterVM(coordinator: self, usecase: RegisterUC(repository: RegisterRP())), baseView: RegisterV())
-        self.window.rootViewController = self.mainVC
+        let mainVC = RegisterVC(viewModel: RegisterVM(coordinator: self, usecase: RegisterUC(repository: RegisterRP())), baseView: RegisterV())
+        self.window.rootViewController = mainVC
         self.window.makeKeyAndVisible()
         self.vc = mainVC
     }
@@ -34,7 +33,7 @@ protocol RegisterSceneDirector: AnyObject{
 
 extension RegisterCoordinator: SearchResultSceneDirector{
     func goSearchResult(resultData: String) {
-        let coordi = SearchResultCoordinator(presenter: self.mainVC!, resultData: resultData)
+        let coordi = SearchResultCoordinator(presenter: self.vc!, resultData: resultData)
         coordi.previousCoordinator = self
         coordi.start()
         self.children.append(coordi)

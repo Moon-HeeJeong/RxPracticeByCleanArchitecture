@@ -12,6 +12,7 @@ import RxCocoa
 protocol InputType{}
 protocol OutputType{}
 
+
 protocol ViewModelType{
     associatedtype UseCase: UseCaseType
     associatedtype Coordinator: CoordinatorType
@@ -65,6 +66,15 @@ class RegisterVM: ViewModelType{
         var showAlert: Driver<AlertData?>
     }
     
+    //protocol ==
+    var coordinator: RegisterCoordinator?
+    var usecase: RegisterUC
+    
+    var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
+    var receiveGiftOvb: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
+    var giftDeliverObv = PublishSubject<Any?>()
+    //==========
     
     var isLimitedNameCountOvb: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var isLimitedPwCountOvb: BehaviorRelay<Bool> = BehaviorRelay(value: false)
@@ -74,14 +84,7 @@ class RegisterVM: ViewModelType{
     var pwKeywordOvb: BehaviorRelay<String> = BehaviorRelay(value: "")
     var searchKeywordOvb: BehaviorRelay<String> = BehaviorRelay(value: "")
     var getCountOvb: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
-    
-    
-    var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
-    var receiveGiftOvb: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
-    var giftDeliverObv = PublishSubject<Any?>()
-    
-    var imgUrlStr: String = ""
+    var imgUrlStrOvb: BehaviorRelay<String> = BehaviorRelay(value: "")
    
     lazy var isEnabledRegisterOvb: Observable<Bool> = {
         Observable.combineLatest(self.nameKeywordOvb, self.pwKeywordOvb){name, pw in
@@ -95,11 +98,7 @@ class RegisterVM: ViewModelType{
                 }
             }
         }
-        
     }()
-    
-    weak var coordinator: RegisterCoordinator? //weak
-    var usecase: RegisterUC
     
     let disposeBag = DisposeBag()
     
@@ -114,11 +113,11 @@ class RegisterVM: ViewModelType{
         
         input.nameText
             .bind(to: self.nameKeywordOvb)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         input.pwText
             .bind(to: self.pwKeywordOvb)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         input.btnTap
             .bind {
@@ -128,22 +127,20 @@ class RegisterVM: ViewModelType{
 
                     switch event{
                     case .next(let data):
-                        print("getData next :: \(data.resultCount)")
                         self.getCountOvb.accept(data.resultCount)
                         print("url::\(data.results?.first?.ipadScreenshotUrls.first ?? "")")
-                        self.imgUrlStr = data.results?.first?.ipadScreenshotUrls.first ?? ""
+                        self.imgUrlStrOvb.accept(data.results?.first?.ipadScreenshotUrls.first ?? "")
                         count = data.resultCount
                         break
                     case .error(let err):
                         print("getData error :: \(err.localizedDescription)")
                         break
                     case .completed:
-                        print("getData completed")
                         self.isActivityOn.accept(false)
                         if let count = count{
                             self.showAlertOvb.accept(AlertData(title: "검색완료", message: "\(count)개의 검색결과가 있습니다.", btnType: .two(btnTxts: ["결과확인", "취소"], action1: { [weak self] _ in
                                 print("결과확인")
-                                self?.coordinator?.goSearchResult(resultData: self?.imgUrlStr ?? "")
+                                self?.coordinator?.goSearchResult(resultData: self?.imgUrlStrOvb.value ?? "")
                             }, action2: {[weak self] _ in
                                 print("취소")
                             })))
@@ -161,12 +158,12 @@ class RegisterVM: ViewModelType{
         
         self.receiveGiftOvb
             .subscribe {[weak self] value in
-                print("received gift🎁 \(value)")
+                print("Register received gift🎁 \(value)")
             }.disposed(by: self.disposeBag)
 
         self.giftDeliverObv
             .subscribe {[weak self] value in
-                print("deliverGift🎁 \(value)")
+                print("Register deliverGift🎁 \(value)")
                 self?.coordinator?.deliverGift(value: value)
             }.disposed(by: self.disposeBag)
     }

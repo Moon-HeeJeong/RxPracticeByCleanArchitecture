@@ -49,20 +49,15 @@ class SearchResultVC: BaseViewController{
     
     func initValues(resultData: String?){
         if let url = URL(string: resultData ?? ""){
-            URLSession.shared.dataTask(with: url) { data, response, err in
-                guard let imgData = data else{ return }
-                DispatchQueue.main.async {
-                    let img = UIImage(data: imgData)
-                    self._viewModel.getImgObv.accept(img)
+            
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                guard let imgData = data else{
+                    print("no imgData")
+                    return
                 }
-            }
-            
-            
-            
-            
-//            let data = (try? Data(contentsOf: url))!
-//            let img = UIImage(data: data)
-//            self._viewModel.getImgObv.accept(img)
+                let img = UIImage(data: imgData)
+                self._viewModel.getImgObv.accept(img)
+            }.resume()
         }
     }
     

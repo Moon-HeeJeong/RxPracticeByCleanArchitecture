@@ -18,7 +18,6 @@ class AddedPageCoordinator: Coordinator{
     
     override func start() {
         let vc = AddedPageVC(viewModel: AddedPageVM(coordinator: self, usecase: AddedPageUC(repository: AddedPageRP())), baseView: AddedPageV())
-        
         self.navigationController?.pushViewController(vc, animated: true)
         self.vc = vc
     }

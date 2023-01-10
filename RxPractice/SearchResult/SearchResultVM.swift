@@ -24,6 +24,9 @@ class SearchResultVM: ViewModelType{
         var img: Driver<UIImage?>
     }
     
+    var coordinator: SearchResultCoordinator?
+    var usecase: SearchResultUC
+    
     var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
     var receiveGiftOvb: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
@@ -31,9 +34,6 @@ class SearchResultVM: ViewModelType{
     
     var getImgUrlStrObv: BehaviorRelay<String> = BehaviorRelay(value: "")
     var getImgObv: BehaviorRelay<UIImage?> = BehaviorRelay(value: nil)
-    
-    weak var coordinator: SearchResultCoordinator?
-    var usecase: SearchResultUC
     
     let disposeBag = DisposeBag()
     
@@ -47,14 +47,11 @@ class SearchResultVM: ViewModelType{
     func transformToOutput(input: Input) -> Output {
         input.nextBtnTap
             .bind {
-//                self.giftObv.accept("== SearchResultVM -> AddedPageVM 이동 중 ==")
-                print("SearchResult VM --> Registe VM deliver gift")
                 self.giftDeliverObv.onNext("== SearchResultVM -> AddedPageVM 이동 중 ==")
                 self.coordinator?.goAddedPage()
             }.disposed(by: disposeBag)
         input.closeBtnTap
             .bind {
-                print("SearchResult VM --> Registe VM deliver gift")
                 self.giftDeliverObv.onNext("== SearchResultVM 화면 종료 중 ==")
                 self.coordinator?.finish()
             }.disposed(by: disposeBag)
@@ -62,17 +59,16 @@ class SearchResultVM: ViewModelType{
         return Output(img: self.getImgObv.asDriver(onErrorJustReturn: nil))
     }
     
-    
     func setUpGift(){
         
         self.receiveGiftOvb
             .subscribe {[weak self] value in
-                print("received gift🎁 \(value)")
+                print("SearchResult received gift🎁 \(value)")
             }.disposed(by: self.disposeBag)
 
         self.giftDeliverObv
             .subscribe {[weak self] value in
-                print("deliverGift🎁 \(value)")
+                print("SearchResult deliverGift🎁 \(value)")
                 self?.coordinator?.deliverGift(value: value)
             }.disposed(by: self.disposeBag)
     }
