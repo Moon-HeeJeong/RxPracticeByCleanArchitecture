@@ -44,7 +44,7 @@ class RegisterVC: BaseViewController {
     
     override func bind(){
         
-        let txtCountCheckOutput = self._viewModel.transformToOutput(input: RegisterVM.Input(nameText: self._view.rx.nameText, pwText: self._view.rx.pwText, btnTap: self._view.rx.registerBtnTap), disposeBag: self.disposeBag)
+        let txtCountCheckOutput = self._viewModel.transformToOutput(input: RegisterVM.Input(nameText: self._view.rx.nameText, pwText: self._view.rx.pwText, btnTap: self._view.rx.registerBtnTap))
         
         txtCountCheckOutput.isEnabledRegisterBtn
             .drive(self._view.rx.isEnabledRegisterBtn)
@@ -69,8 +69,6 @@ class RegisterVC: BaseViewController {
                 self.alertOvb.accept(alertData)
             }
             .disposed(by: self.disposeBag)
-        
-        
         
     }
     

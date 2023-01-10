@@ -44,7 +44,7 @@ class AddedPageVC: BaseViewController{
     }
     
     override func bind(){
-        let output = self._viewModel.transformToOutput(input: AddedPageVM.Input(closeBtnTap: self._view.rx.closeBtnTap), disposeBag: self.disposeBag)
+        let output = self._viewModel.transformToOutput(input: AddedPageVM.Input(closeBtnTap: self._view.rx.closeBtnTap))
     }
     
     

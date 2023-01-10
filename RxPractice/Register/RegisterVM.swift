@@ -24,29 +24,26 @@ protocol ViewModelType{
     var receiveGiftOvb: BehaviorRelay<Any?> {get set}
     var giftDeliverObv: PublishSubject<Any?> {get set}
     
-    func transformToOutput(input: Input, disposeBag: DisposeBag) -> Output
-
     var coordinator: Coordinator?{get set}
     var usecase: UseCase{get set}
     
+    func transformToOutput(input: Input) -> Output
 }
 
 extension ViewModelType{
     
-    func setUpGift(disposeBag: DisposeBag){
-        
-        self.receiveGiftOvb
-            .subscribe {
-                print("received gift🎁 \($0)")
-            }.disposed(by: disposeBag)
-        
-        self.giftDeliverObv
-            .subscribe { value in
-                print("deliverGift🎁 \(value)")
-                self.coordinator?.deliverGift(value: value)
-//                self.coordinator.self?.deliverGift(value: value)
-            }.disposed(by: disposeBag)
-    }
+//    func setUpGift(disposeBag: DisposeBag){
+//        self.receiveGiftOvb
+//            .subscribe {[weak self] value in
+//                print("received gift🎁 \(value)")
+//            }.disposed(by: disposeBag)
+//
+//        self.giftDeliverObv
+//            .subscribe {[weak self] value in
+//                print("deliverGift🎁 \(value)")
+//                self?.coordinator?.deliverGift(value: value)
+//            }.disposed(by: disposeBag)
+//    }
 }
 
 class RegisterVM: ViewModelType{
@@ -101,31 +98,27 @@ class RegisterVM: ViewModelType{
         
     }()
     
-    var coordinator: RegisterCoordinator? //weak
+    weak var coordinator: RegisterCoordinator? //weak
     var usecase: RegisterUC
     
-    let dBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     init(coordinator: RegisterCoordinator, usecase: RegisterUC){
         self.coordinator = coordinator
         self.usecase = usecase
         
-        self.setUpGift(disposeBag: dBag)
-        
-//        self.receiveGiftOvb.subscribe { //[weak self] value in
-//            print("RegisterVM init 에서 설정한 구독 \($0)")
-//        }.disposed(by: dBag)
+        self.setUpGift()
     }
     
-    func transformToOutput(input: Input, disposeBag: DisposeBag) -> Output {
+    func transformToOutput(input: Input) -> Output {
         
         input.nameText
             .bind(to: self.nameKeywordOvb)
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
         
         input.pwText
             .bind(to: self.pwKeywordOvb)
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
         
         input.btnTap
             .bind {
@@ -157,10 +150,24 @@ class RegisterVM: ViewModelType{
                         }
                         break
                     }
-                }.disposed(by: disposeBag)
+                }.disposed(by: self.disposeBag)
             }
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
         
         return Output(isEnabledRegisterBtn: self.isEnabledRegisterOvb.asDriver(onErrorJustReturn: false), searchedCount: self.getCountOvb.asDriver(onErrorJustReturn: -1), isActiveAnimation: self.isActivityOn.asDriver(), showAlert: self.showAlertOvb.asDriver())
+    }
+    
+    func setUpGift(){
+        
+        self.receiveGiftOvb
+            .subscribe {[weak self] value in
+                print("received gift🎁 \(value)")
+            }.disposed(by: self.disposeBag)
+
+        self.giftDeliverObv
+            .subscribe {[weak self] value in
+                print("deliverGift🎁 \(value)")
+                self?.coordinator?.deliverGift(value: value)
+            }.disposed(by: self.disposeBag)
     }
 }

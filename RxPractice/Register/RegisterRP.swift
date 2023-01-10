@@ -138,7 +138,7 @@ class RegisterRP: RepositoryType{
     typealias TestResponse = Observable<TestAPI.ResponseType>
     
     var api: APITest
-    var dBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     init(){
         self.api = APITest()

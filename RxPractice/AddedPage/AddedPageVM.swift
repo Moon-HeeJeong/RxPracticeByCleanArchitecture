@@ -15,7 +15,6 @@ class AddedPageVM: ViewModelType{
         print("deinit \(self)")
     }
     
-    
     struct Input: InputType{
         var closeBtnTap: Observable<Void>
     }
@@ -23,37 +22,45 @@ class AddedPageVM: ViewModelType{
     struct Output: OutputType{
     }
     
-//    weak var coordinator: AddedPageCoordinator?
-    
     var isActivityOn: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var showAlertOvb: BehaviorRelay<AlertData?> = BehaviorRelay(value: nil)
     var receiveGiftOvb: BehaviorRelay<Any?> = BehaviorRelay(value: nil)
-    var giftDeliverObv = PublishSubject<Any?>()
+    var giftDeliverObv: PublishSubject<Any?> = PublishSubject()
     
-//    var usecase: AddedPageUC
     weak var coordinator: AddedPageCoordinator?
     var usecase: AddedPageUC
-    let dBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     init(coordinator: AddedPageCoordinator, usecase: AddedPageUC){
         self.coordinator = coordinator
         self.usecase = usecase
         
-        self.setUpGift(disposeBag: dBag)
+        self.setUpGift()
     }
     
-    
-    func transformToOutput(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
+    func transformToOutput(input: Input) -> Output {
         
         input.closeBtnTap
             .bind {
                 print("AddPage VM --> SearchResult VM deliver gift")
                 self.giftDeliverObv.onNext("AddPage 종료")
-//                self.giftDeliverObv.onNext("jjjjjj")
                 self.coordinator?.finish()
-            }.disposed(by: disposeBag)
+            }.disposed(by: self.disposeBag)
         
         return Output()
     }
     
+    func setUpGift(){
+        
+        self.receiveGiftOvb
+            .subscribe {[weak self] value in
+                print("received gift🎁 \(value)")
+            }.disposed(by: self.disposeBag)
+
+        self.giftDeliverObv
+            .subscribe {[weak self] value in
+                print("deliverGift🎁 \(value)")
+                self?.coordinator?.deliverGift(value: value)
+            }.disposed(by: self.disposeBag)
+    }
 }
